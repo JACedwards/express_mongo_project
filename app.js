@@ -2,9 +2,43 @@
 const { render } = require('ejs');
 const { Router } = require('express');
 const express = require('express');
+const dotenv = require('dotenv');
+const { connectDB } = require('./src/db');
+const { graphqlHTTP } = require('express-graphql');
+const schema = require('./src/graphql/schema');
+// const { authenticate } = require('./src/middleware/auth');
+// const { userData } = require('./src/middleware/userData');
+const path = require('path')
+const cookieParser = require('cookie-parser')
+
+dotenv.config()
 
 const app = express();
-const port = 3000;
+
+connectDB()
+
+// const port = 3000;
+
+
+
+// app.use(authenticate)
+// app.use(userData)
+app.use(cookieParser())
+
+app.use("/graphql", graphqlHTTP({
+    schema,
+    graphiql: true
+}))
+
+app.set('views', path.join(__dirname, '/src/templates/views'));
+
+app.use(express.urlencoded({ extended:true}));
+
+// require("./src/routes/")(app)
+
+
+
+// Below is day one stuff
 
 //  middleware  runs on every route
 app.use((req, res, next) =>{
@@ -12,21 +46,13 @@ app.use((req, res, next) =>{
     next();
 })
 
-// *****Passing in an object
 
-// const characters = {
-//     normal: 'frank reynolds',
-//     art: 'ongo',
-//     work: 'the warthog'
-// }
+// app.listen(port,  () => {
+//     console.log('this is listening on port 3000');
+// });
 
-// app.use('/:actor/frank/:character', (res, ref, next) => {
-//     console.log('route specific middleware. ');
-//     next();
-// })
-
-app.listen(port,  () => {
-    console.log('this is listening on port 3000');
+app.listen(process.env.PORT, () => {
+    console.log(`Server now running on PORT ${process.env.PORT}`)
 });
 
 
