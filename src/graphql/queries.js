@@ -30,3 +30,5 @@ const posts = {
         return PostInputType.find()
     }
 }
+
+module.exports = { users, postByID, posts }

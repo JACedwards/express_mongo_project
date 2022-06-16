@@ -1,6 +1,6 @@
 const { GraphQLObjectType, GraphQLInputObjectType, GraphQLID, GraphQLString, GraphQLList, GraphQLInt, GraphQLBoolean, GraphQLFloat } = require('graphql')
 
-const { User, Submission, Post } = require('../models')
+const { User, Submission, Post1 } = require('../models')
 
 const UserType = new GraphQLObjectType ({
     name: 'User',
@@ -30,21 +30,21 @@ const PostInputType = new GraphQLInputObjectType({
     description: 'Post content input type for post submits',
     fields: () => ({
         userId: {
-            type: String,
+            type: GraphQLString,
             required: true,
         },
         postId: {
-            type: String,
+            type: GraphQLString,
         },
         postContent: {
-            type: String,
+            type: GraphQLString,
             required: true,
         },
         postTag: {
-            type: String,
+            type: GraphQLString,
         },
         image: {
-            type: String,
+            type: GraphQLString,
         }
     })
 })

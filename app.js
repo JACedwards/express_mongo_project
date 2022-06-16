@@ -19,9 +19,9 @@ connectDB()
 
 // const port = 3000;
 
+const { authenticate } = require('./src/middleware/auth')
 
-
-// app.use(authenticate)
+app.use(authenticate)
 // app.use(userData)
 app.use(cookieParser())
 
@@ -46,7 +46,7 @@ app.use((req, res, next) =>{
     next();
 })
 
-
+require("./src/routes");
 // app.listen(port,  () => {
 //     console.log('this is listening on port 3000');
 // });
